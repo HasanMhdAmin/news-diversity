@@ -1,57 +1,73 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete, { createFilterOptions } from '@material-ui/lab/Autocomplete';
+import Button from "@material-ui/core/Button";
 
 const filter = createFilterOptions();
 
-export default function FreeSoloCreateOption() {
+export default function FreeSoloCreateOption(props) {
     const [value, setValue] = React.useState(null);
+    const { onChangeValue } = props.onChangeValue;
+
+
+    function f(text) {
+        // console.log("click: " + text.title);
+        props.onChangeValue(text);
+    }
 
     return (
-        <Autocomplete
-            value={value}
-            onChange={(event, newValue) => {
-                if (newValue && newValue.inputValue) {
-                    setValue({
-                        title: newValue.inputValue,
-                    });
 
-                    return;
-                }
+        <div>
+            <Autocomplete
+                value={value}
+                onChange={(event, newValue) => {
+                    if (newValue && newValue.inputValue) {
+                        setValue({
+                            title: newValue.inputValue,
+                        });
 
-                setValue(newValue);
-            }}
-            filterOptions={(options, params) => {
-                const filtered = filter(options, params);
+                        return;
+                    }
 
-                if (params.inputValue !== '') {
-                    filtered.push({
-                        inputValue: params.inputValue,
-                        title: `Add "${params.inputValue}"`,
-                    });
-                }
 
-                return filtered;
-            }}
-            id="free-solo-with-text-demo"
-            options={top100Films}
-            getOptionLabel={option => {
-                // e.g value selected with enter, right from the input
-                if (typeof option === 'string') {
-                    return option;
-                }
-                if (option.inputValue) {
-                    return option.inputValue;
-                }
-                return option.title;
-            }}
-            renderOption={option => option.title}
-            style={{ width: 300 }}
-            freeSolo
-            renderInput={params => (
-                <TextField {...params} label="Free solo with text demo" variant="outlined" />
-            )}
-        />
+                    setValue(newValue);
+                }}
+                filterOptions={(options, params) => {
+                    const filtered = filter(options, params);
+
+                    if (params.inputValue !== '') {
+                        filtered.push({
+                            inputValue: params.inputValue,
+                            title: `Add "${params.inputValue}"`,
+                        });
+                    }
+
+                    return filtered;
+                }}
+                id="free-solo-with-text-demo"
+                options={top100Films}
+                getOptionLabel={option => {
+                    // e.g value selected with enter, right from the input
+                    if (typeof option === 'string') {
+                        return option;
+                    }
+                    if (option.inputValue) {
+                        return option.inputValue;
+                    }
+                    return option.title;
+                }}
+                renderOption={option => option.title}
+                style={{ width: 300 }}
+                freeSolo
+                renderInput={params => (
+                    <TextField {...params} label="Free solo with text demo" variant="outlined" />
+                )}
+            />
+
+
+            <Button variant="contained" onClick={() => f(value) }>Analyze</Button>
+        </div>
+
     );
 }
 
