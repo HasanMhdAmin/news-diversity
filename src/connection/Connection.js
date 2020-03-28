@@ -14,11 +14,6 @@ function getSources() {
             'Content-Type': 'application/json'
         }
     };
-    // var data = {
-    //     'UserID': userId,
-    //     'ConnectID': connectId,
-    // };
-    // console.log("request body: " + JSON.stringify(data));
     return axios.get(SOURCE, axiosConfig)
         .then(response => {
             console.log("connection ==> " + JSON.stringify(response));

@@ -10,10 +10,6 @@ export default function LandingPage(props) {
 
    function onChangeValueHandler (val)  {
        console.log("click: " + val.name);
-       getSources()
-           .then(result => {
-
-       });
    }
 
     return (
