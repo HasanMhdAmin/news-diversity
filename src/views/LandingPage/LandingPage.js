@@ -1,7 +1,7 @@
 import React from 'react';
-import FreeSoloCreateOption from "../../components/Autocomplete/Autocomplete";
+import SourceAutocomplete from "../../components/Autocomplete/Autocomplete";
 import './LandingPage.css';
-import Button from "@material-ui/core/Button";
+import {getSources} from "../../connection/Connection";
 
 
 export default function LandingPage(props) {
@@ -9,13 +9,17 @@ export default function LandingPage(props) {
 
 
    function onChangeValueHandler (val)  {
-       console.log("click: " + val.title);
-    }
+       console.log("click: " + val.name);
+       getSources()
+           .then(result => {
+
+       });
+   }
 
     return (
         <div>
             <header className="lp-header">
-                <FreeSoloCreateOption
+                <SourceAutocomplete
                     onChangeValue = {onChangeValueHandler}
                 />
 
