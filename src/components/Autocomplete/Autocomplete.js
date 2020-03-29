@@ -4,6 +4,7 @@ import Autocomplete, {createFilterOptions} from '@material-ui/lab/Autocomplete';
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {getSources} from "../../connection/Connection";
+import Container from "@material-ui/core/Container";
 
 const filter = createFilterOptions();
 
@@ -12,6 +13,15 @@ export default function SourceAutocomplete(props) {
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
     const loading = open && options.length === 0;
+
+    const analyzeBtn = {
+        marginLeft: 20
+    };
+
+    const search = {
+        display: "flex",
+        justifyContent: "center"
+    };
 
     React.useEffect(() => {
         let active = true;
@@ -44,7 +54,8 @@ export default function SourceAutocomplete(props) {
     }
 
     return (
-        <div>
+        <Container maxWidth="sm" style={search}>
+
             <Autocomplete
                 value={value}
                 open={open}
@@ -116,31 +127,9 @@ export default function SourceAutocomplete(props) {
                 // )}
             />
 
+            <Button variant="contained" style={analyzeBtn} onClick={() => f(value)}>Analyze</Button>
 
-            <Button variant="contained" onClick={() => f(value)}>Analyze</Button>
-        </div>
+        </Container>
 
     );
 }
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-    {
-        "id": 1,
-        "name": "BBC News",
-        "domain": "https://www.bbc.com",
-        "organization": "bbc"
-    },
-    {
-        "id": 2,
-        "name": "The Guardian",
-        "domain": "https://www.theguardian.com",
-        "organization": "theguardian"
-    },
-    {
-        "id": 3,
-        "name": "CNN",
-        "domain": "https://cnn.com",
-        "organization": "cnn"
-    }
-];
