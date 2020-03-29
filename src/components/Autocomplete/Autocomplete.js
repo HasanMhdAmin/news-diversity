@@ -26,17 +26,6 @@ export default function SourceAutocomplete(props) {
                 setOptions(result.data)
             }
         });
-        // (async () => {
-        //     const response = await fetch('http://192.168.1.103:7777/api/source');
-        //     // await sleep(1e3); // For demo purposes.
-        //     const countries = await response.json();
-        //
-        //     if (active) {
-        //         setOptions(countries)
-        //         // setOptions(Object.keys(countries).map(key => countries[key].item[0]));
-        //     }
-        // })();
-
         return () => {
             active = false;
         };

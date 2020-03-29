@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import LandingPage from "./views/LandingPage/LandingPage";
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 
@@ -17,12 +17,12 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
-    <BrowserRouter>
-        <Switch>
-            <Route path="/test" component={App} />
-            <Route path="/" component={LandingPage} />
-        </Switch>
-    </BrowserRouter>
+        <BrowserRouter>
+            <Switch>
+                <Route path="/test" component={App}/>
+                <Route path="/" component={LandingPage}/>
+            </Switch>
+        </BrowserRouter>
     </MuiThemeProvider>,
     document.getElementById('root')
 );
