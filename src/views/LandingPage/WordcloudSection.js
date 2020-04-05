@@ -51,9 +51,9 @@ export default function WordcloudSection(props) {
                     textColor="secondary"
                     aria-label="icon label tabs example"
                 >
-                    <Tab icon={<TodayIcon/>} label="RECENTS"/>
-                    <Tab icon={<DateRangeIcon/>} label="FAVORITES"/>
-                    <Tab icon={<EventIcon/>} label="NEARBY"/>
+                    <Tab icon={<TodayIcon/>} label="Daily"/>
+                    <Tab icon={<DateRangeIcon/>} label="Weekly"/>
+                    <Tab icon={<EventIcon/>} label="Monthly"/>
                 </Tabs>
             </AppBar>
             <SwipeableViews
@@ -61,15 +61,12 @@ export default function WordcloudSection(props) {
                 onChangeIndex={handleWordcloudChangeIndex}
             >
                 <TabPanelContainer value={wordcloudPage} index={0}>
-                    test 0١
                     <Wordcloud words={wordsDaily}/>
                 </TabPanelContainer>
                 <TabPanelContainer value={wordcloudPage} index={1}>
-                    test 02
                     <Wordcloud words={wordsWeekly}/>
                 </TabPanelContainer>
                 <TabPanelContainer value={wordcloudPage} index={2}>
-                    test 03
                     <Wordcloud words={wordsMonthly}/>
                 </TabPanelContainer>
             </SwipeableViews>

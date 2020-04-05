@@ -3,11 +3,13 @@ import axios from 'axios';
 const BASE_API_URL = 'http://192.168.1.103:7777/api/';
 const SOURCE = BASE_API_URL + "source";
 const KEYWORD = BASE_API_URL + "keyword";
+const DIVERSITY = BASE_API_URL + "diversity";
 
 
 export {
     getSources,
-    getKeyword
+    getKeyword,
+    getDiversity
 };
 
 function getSources() {
@@ -18,7 +20,7 @@ function getSources() {
     };
     return axios.get(SOURCE, axiosConfig)
         .then(response => {
-            console.log("connection ==> " + JSON.stringify(response));
+            console.log("SOURCE: connection ==> " + JSON.stringify(response));
             return response
         })
         .catch(error => {
@@ -37,7 +39,25 @@ function getKeyword(url, period) {
     };
     return axios.get(KEYWORD, axiosConfig)
         .then(response => {
-            console.log("connection ==> " + JSON.stringify(response));
+            console.log("KEYWORD: connection ==> " + JSON.stringify(response));
+            return response
+        })
+        .catch(error => {
+            console.log(JSON.stringify(error));
+            return error
+        });
+}
+
+
+function getDiversity(url, period) {
+    let axiosConfig = {
+        params: {
+            period: period,
+        }
+    };
+    return axios.get(DIVERSITY, axiosConfig)
+        .then(response => {
+            console.log("DIVERSITY: connection ==> " + JSON.stringify(response));
             return response
         })
         .catch(error => {
