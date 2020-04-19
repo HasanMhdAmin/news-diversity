@@ -10,6 +10,7 @@ import TabPanelContainer from "../../components/TabPanel/TabPanelContainer";
 
 import {Bar, BarChart, CartesianGrid, Cell, Tooltip, XAxis, YAxis,} from 'recharts';
 import {getDiversity} from "../../connection/Connection";
+import COLOR from "../../resources/Color";
 
 //
 // const serverMock = {
@@ -75,22 +76,22 @@ export default function NewsDiversitySection(props) {
 
     function setResult(result, setter) {
         setter([{
-            name: 'Business', diversity: result.data.business, color: "#FF7F0E",
+            name: 'Business', diversity: result.data.business, color: COLOR.ORANGE,
         },
             {
-                name: 'Politics', diversity: result.data.politics, color: "#D62728",
+                name: 'Politics', diversity: result.data.politics, color: COLOR.RED,
             },
             {
-                name: 'Health', diversity: result.data.health, color: "#2CA02C",
+                name: 'Health', diversity: result.data.health, color: COLOR.GREEN,
             },
             {
-                name: 'Entertainment', diversity: result.data.entertainment, color: "#9467BD",
+                name: 'Entertainment', diversity: result.data.entertainment, color: COLOR.LILAC,
             },
             {
-                name: 'Science', diversity: result.data.science, color: "#1F77B4",
+                name: 'Science', diversity: result.data.science, color: COLOR.BLUE,
             },
             {
-                name: 'Technology', diversity: result.data.technology, color: "#8C564B",
+                name: 'Technology', diversity: result.data.technology, color: COLOR.BROWN,
             }])
 
     }

@@ -40,6 +40,12 @@ export default function WordcloudSection(props) {
         });
     }, []);
 
+    const onWordClickCallback = {
+        getWordTooltip: word => `The word "${word.text}" appears ${word.value} times.`,
+        onWordClick: word => props.handleOpenArticlesDialog()
+    };
+
+
     return (
         <div>
             <AppBar position="static" color="default">
@@ -61,7 +67,7 @@ export default function WordcloudSection(props) {
                 onChangeIndex={handleWordcloudChangeIndex}
             >
                 <TabPanelContainer value={wordcloudPage} index={0}>
-                    <Wordcloud words={wordsDaily}/>
+                    <Wordcloud words={wordsDaily} callback={onWordClickCallback}/>
                 </TabPanelContainer>
                 <TabPanelContainer value={wordcloudPage} index={1}>
                     <Wordcloud words={wordsWeekly}/>
@@ -70,6 +76,8 @@ export default function WordcloudSection(props) {
                     <Wordcloud words={wordsMonthly}/>
                 </TabPanelContainer>
             </SwipeableViews>
+
+
         </div>
     );
 }

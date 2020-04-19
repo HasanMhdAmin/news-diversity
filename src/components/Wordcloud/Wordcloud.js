@@ -1,21 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ReactWordcloud from 'react-wordcloud';
-import SourceAutocomplete from "../Autocomplete/Autocomplete";
+import COLOR from "../../resources/Color";
 
 export default function Wordcloud(props) {
 
     return (
-        <div style={{ height: 400, maxWidth: 500 }}>
+        <div style={{height: 400, maxWidth: 500}}>
             <ReactWordcloud words={props.words}
+                            callbacks={props.callback}
                             options={{
                                 colors: [
-                                    '#1f77b4',
-                                    '#ff7f0e',
-                                    '#2ca02c',
-                                    '#d62728',
-                                    '#9467bd',
-                                    '#8c564b',
+                                    COLOR.BLUE,
+                                    COLOR.ORANGE,
+                                    COLOR.GREEN,
+                                    COLOR.RED,
+                                    COLOR.LILAC,
+                                    COLOR.BROWN,
                                 ],
                                 // enableTooltip: true,
                                 // deterministic: true,
