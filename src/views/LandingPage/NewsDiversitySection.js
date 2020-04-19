@@ -75,6 +75,7 @@ export default function NewsDiversitySection(props) {
     }, []);
 
     function setResult(result, setter) {
+        // TODO match categories with server
         setter([{
             name: 'Business', diversity: result.data.business, color: COLOR.ORANGE,
         },
