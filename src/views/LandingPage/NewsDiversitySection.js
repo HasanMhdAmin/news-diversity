@@ -86,10 +86,10 @@ export default function NewsDiversitySection(props) {
                 name: 'Entertainment', diversity: result.data.entertainment, color: COLOR.LILAC,
             },
             {
-                name: 'Science', diversity: result.data.science, color: COLOR.BLUE,
+                name: 'Science & Technology', diversity: result.data.scienceTechnology, color: COLOR.BLUE,
             },
             {
-                name: 'Technology', diversity: result.data.technology, color: COLOR.BROWN,
+                name: 'Sport', diversity: result.data.sport, color: COLOR.BROWN,
             }])
 
     }
