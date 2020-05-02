@@ -59,8 +59,8 @@ export default function TagView(props) {
         }
     };
 
-    const items = props.items.map((item) =>
-        <div className={[classes.item, bgColor(item)].join(' ')}>
+    const items = props.items.map((item, index) =>
+        <div key={index} className={[classes.item, bgColor(item)].join(' ')}>
             {item}
         </div>
     );

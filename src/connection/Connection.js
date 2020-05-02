@@ -4,12 +4,14 @@ const BASE_API_URL = 'http://192.168.1.103:7777/api/';
 const SOURCE = BASE_API_URL + "source";
 const KEYWORD = BASE_API_URL + "keyword";
 const DIVERSITY = BASE_API_URL + "diversity";
+const ARTICLES_BY_KEYWORD = BASE_API_URL + "articles/keyword";
 
 
 export {
     getSources,
     getKeyword,
-    getDiversity
+    getDiversity,
+    getArticlesByKeyword
 };
 
 function getSources() {
@@ -20,7 +22,7 @@ function getSources() {
     };
     return axios.get(SOURCE, axiosConfig)
         .then(response => {
-            console.log("SOURCE: connection ==> " + JSON.stringify(response));
+            // console.log("SOURCE: connection ==> " + JSON.stringify(response));
             return response
         })
         .catch(error => {
@@ -39,7 +41,7 @@ function getKeyword(url, period) {
     };
     return axios.get(KEYWORD, axiosConfig)
         .then(response => {
-            console.log("KEYWORD: connection ==> " + JSON.stringify(response));
+            // console.log("KEYWORD: connection ==> " + JSON.stringify(response));
             return response
         })
         .catch(error => {
@@ -57,11 +59,31 @@ function getDiversity(url, period) {
     };
     return axios.get(DIVERSITY, axiosConfig)
         .then(response => {
-            console.log("DIVERSITY: connection ==> " + JSON.stringify(response));
+            // console.log("DIVERSITY: connection ==> " + JSON.stringify(response));
             return response
         })
         .catch(error => {
             console.log(JSON.stringify(error));
+            return error
+        });
+}
+
+
+function getArticlesByKeyword(q, page) {
+    let axiosConfig = {
+        params: {
+            q: q,
+            page: page
+        }
+    };
+    return axios.get(ARTICLES_BY_KEYWORD, axiosConfig)
+        .then(response => {
+            console.log("ARTICLES_BY_KEYWORD: connection ==> ");
+            // console.log("ARTICLES_BY_KEYWORD: connection ==> " + JSON.stringify(response));
+            return response
+        })
+        .catch(error => {
+            console.log("ARTICLES_BY_KEYWORD : " + JSON.stringify(error));
             return error
         });
 }

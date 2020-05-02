@@ -9,9 +9,12 @@ import ArticlesDialog from "../../components/ArticlesDialog/ArticlesDialog";
 
 export default function LandingPage(props) {
     const [isArticlesDialogOpened, setArticlesDialogOpened] = React.useState(false);
+    const [word, setWord] = React.useState("");
 
-    const handleOpenArticlesDialog = () => {
+    const handleOpenArticlesDialog = (word) => {
         setArticlesDialogOpened(true);
+        console.log("LandingPage: word" + word)
+        setWord(word)
     };
 
     const handleCloseArticlesDialog = () => {
@@ -43,7 +46,9 @@ export default function LandingPage(props) {
             </Container>
 
             <ArticlesDialog isArticlesDialogOpened={isArticlesDialogOpened}
-                            handleCloseArticlesDialog={handleCloseArticlesDialog}/>
+                            handleCloseArticlesDialog={handleCloseArticlesDialog}
+                            word = {word}
+            />
 
 
         </div>

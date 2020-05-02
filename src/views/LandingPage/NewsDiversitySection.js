@@ -61,15 +61,12 @@ export default function NewsDiversitySection(props) {
 
     React.useEffect(() => {
         getDiversity("", "daily").then(result => {
-            console.log("wordcloud: " + result.data);
             setResult(result, setDiversityDaily);
         });
         getDiversity("", "weekly").then(result => {
-            console.log("wordcloud: " + result.data);
             setResult(result, setDiversityWeekly);
         });
         getDiversity("", "monthly").then(result => {
-            console.log("wordcloud: " + result.data);
             setResult(result, setDiversityMonthly);
         });
     }, []);
@@ -134,7 +131,7 @@ export default function NewsDiversitySection(props) {
                         <CartesianGrid strokeDasharray="1"/>
                         <Bar dataKey="diversity" fill="#000">
                             {diversityDaily.map((entry, index) => (
-                                <Cell fill={entry.color}/>
+                                <Cell key={entry.name} fill={entry.color}/>
                             ))}
                         </Bar>
                     </BarChart>
@@ -156,7 +153,7 @@ export default function NewsDiversitySection(props) {
                         <CartesianGrid strokeDasharray="1"/>
                         <Bar dataKey="diversity" fill="#000">
                             {diversityWeekly.map((entry, index) => (
-                                <Cell fill={entry.color}/>
+                                <Cell key={entry.name} fill={entry.color}/>
                             ))}
                         </Bar>
                     </BarChart>
@@ -178,7 +175,7 @@ export default function NewsDiversitySection(props) {
                         <CartesianGrid strokeDasharray="1"/>
                         <Bar dataKey="diversity" fill="#000">
                             {diversityMonthly.map((entry, index) => (
-                                <Cell fill={entry.color}/>
+                                <Cell key={entry.name} fill={entry.color}/>
                             ))}
                         </Bar>
                     </BarChart>

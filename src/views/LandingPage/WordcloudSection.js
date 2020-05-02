@@ -27,22 +27,22 @@ export default function WordcloudSection(props) {
 
     React.useEffect(() => {
         getKeyword("", "daily").then(result => {
-            console.log("wordcloud: " + result.data);
+            // console.log("wordcloud: " + result.data);
             setWordsDaily(result.data);
         });
         getKeyword("", "weekly").then(result => {
-            console.log("wordcloud: " + result.data);
+            // console.log("wordcloud: " + result.data);
             setWordsWeekly(result.data);
         });
         getKeyword("", "monthly").then(result => {
-            console.log("wordcloud: " + result.data);
+            // console.log("wordcloud: " + result.data);
             setWordsMonthly(result.data);
         });
     }, []);
 
     const onWordClickCallback = {
         getWordTooltip: word => `The word "${word.text}" appears ${word.value} times.`,
-        onWordClick: word => props.handleOpenArticlesDialog()
+        onWordClick: word => props.handleOpenArticlesDialog(word.text)
     };
 
 
