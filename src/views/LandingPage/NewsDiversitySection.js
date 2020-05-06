@@ -8,41 +8,10 @@ import EventIcon from "@material-ui/icons/Event";
 import SwipeableViews from "react-swipeable-views";
 import TabPanelContainer from "../../components/TabPanel/TabPanelContainer";
 
-import {Bar, BarChart, CartesianGrid, Cell, Tooltip, XAxis, YAxis,} from 'recharts';
+import {Bar, BarChart, PieChart, Pie, CartesianGrid, Cell, Tooltip, XAxis, YAxis, Legend} from 'recharts';
 import {getDiversity} from "../../connection/Connection";
 import COLOR from "../../resources/Color";
-
-//
-// const serverMock = {
-//     "business": 13.1021185,
-//     "politics": 15.799614,
-//     "health": 27.938341,
-//     "entertainment": 21.194605,
-//     "science": 12.524084,
-//     "technology": 9.441233,
-//     "totalDiversity": 96.324844
-// };
-//
-// const dataBarChart = [
-//     {
-//         name: 'Business', diversity: serverMock.business, color: "#FF7F0E",
-//     },
-//     {
-//         name: 'Politics', diversity: serverMock.politics, color: "#D62728",
-//     },
-//     {
-//         name: 'Health', diversity: serverMock.health, color: "#2CA02C",
-//     },
-//     {
-//         name: 'Entertainment', diversity: serverMock.entertainment, color: "#9467BD",
-//     },
-//     {
-//         name: 'Science', diversity: serverMock.science, color: "#1F77B4",
-//     },
-//     {
-//         name: 'Technology', diversity: serverMock.technology, color: "#8C564B",
-//     },
-// ];
+import Skeleton from "@material-ui/lab/Skeleton";
 
 export default function NewsDiversitySection(props) {
     const [page, setPage] = React.useState(0);
@@ -94,6 +63,53 @@ export default function NewsDiversitySection(props) {
 
     }
 
+    const data = [
+        { name: 'Group A', diversity: 400 },
+        { name: 'Group B', diversity: 300 },
+        { name: 'Group C', diversity: 300 },
+        { name: 'Group D', diversity: 200 },
+    ];
+
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+    const RADIAN = Math.PI / 180;
+    const renderCustomizedLabel = ({
+                                       cx, cy, midAngle, innerRadius, outerRadius, percent, index, name
+                                   }) => {
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        return (
+            <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                <tspan dx="1.0em" dy="0.2em" alignmentBaseline="middle" fontSize="16">{`${(percent * 100).toFixed(0)}%`}</tspan>
+            </text>
+
+        );
+    };
+
+    const renderCustomLabel = item => {
+
+        const radius = item.innerRadius + (item.outerRadius - item.innerRadius) * 0.5;
+        const x = item.cx + radius * Math.cos(-item.midAngle * RADIAN);
+        const y = item.cy + radius * Math.sin(-item.midAngle * RADIAN);
+
+        return (
+            <text
+                // fill={item.fill}
+                fill="white"
+                x={x}
+                y={y}
+                stroke='none'
+                alignmentBaseline='middle'
+                className='recharts-text recharts-pie-label-text'
+                textAnchor={item.x > item.cx ? 'start' : 'end'}
+            >
+                <tspan x={item.x} textAnchor={item.textAnchor} dy='0em'>{item.name}</tspan>
+            </text>
+        )
+    }
+
     return (
         <div>
             <AppBar position="static" color="default">
@@ -101,9 +117,6 @@ export default function NewsDiversitySection(props) {
                     value={page}
                     onChange={handleChange}
                     variant="fullWidth"
-                    // indicatorColor="secondary"
-                    // textColor="secondary"
-                    // aria-label="icon label tabs example"
                 >
                     <Tab icon={<TodayIcon/>} label="Daily"/>
                     <Tab icon={<DateRangeIcon/>} label="Weekly"/>
@@ -115,70 +128,103 @@ export default function NewsDiversitySection(props) {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanelContainer value={page} index={0}>
-                    <BarChart
-                        width={550}
-                        height={400}
-                        data={diversityDaily}
-                        margin={{
-                            top: 5, right: 5, left: 5, bottom: 5,
-                        }}
-                        barSize={50}
-                    >
-                        <XAxis dataKey="name" scale="point" padding={{left: 30, right: 30}}/>
-                        <YAxis type="number" domain={[0, 100]}/>
-                        <Tooltip/>
-                        {/*<Legend />*/}
-                        <CartesianGrid strokeDasharray="1"/>
-                        <Bar dataKey="diversity" fill="#000">
-                            {diversityDaily.map((entry, index) => (
-                                <Cell key={entry.name} fill={entry.color}/>
-                            ))}
-                        </Bar>
-                    </BarChart>
+                    {diversityDaily.length === 0 ? (
+                        <React.Fragment>
+                            <Skeleton animation="wave" height={30} width="100%"/>
+                        </React.Fragment>
+                    ) : (
+
+                        <PieChart width={400} height={400}>
+                            <Pie
+                                data={diversityDaily}
+                                cx={200}
+                                cy={200}
+                                isAnimationActive={false}
+                                labelLine={false}
+                                label={renderCustomizedLabel}
+                                // label={item => renderCustomLabel(item)}
+                                outerRadius={150}
+                                fill="#8884d8"
+                                dataKey="diversity"
+                            >
+                                {
+                                    diversityDaily.map((entry, index) =>
+                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                    )
+                                }
+                            </Pie>
+                            <Tooltip />
+                            <Legend wrapperStyle={{
+                                bottom: "-15px"
+                            }} />
+                        </PieChart>
+                    )}
                 </TabPanelContainer>
                 <TabPanelContainer value={page} index={1}>
-                    <BarChart
-                        width={550}
-                        height={400}
-                        data={diversityWeekly}
-                        margin={{
-                            top: 5, right: 5, left: 5, bottom: 5,
-                        }}
-                        barSize={50}
-                    >
-                        <XAxis dataKey="name" scale="point" padding={{left: 30, right: 30}}/>
-                        <YAxis type="number" domain={[0, 100]}/>
-                        <Tooltip/>
-                        {/*<Legend />*/}
-                        <CartesianGrid strokeDasharray="1"/>
-                        <Bar dataKey="diversity" fill="#000">
-                            {diversityWeekly.map((entry, index) => (
-                                <Cell key={entry.name} fill={entry.color}/>
-                            ))}
-                        </Bar>
-                    </BarChart>
+                    {diversityWeekly.length === 0 ? (
+                        <React.Fragment>
+                            <Skeleton animation="wave" height={30} width="100%"/>
+                        </React.Fragment>
+                    ) : (
+
+                        <PieChart width={400} height={400}>
+                            <Pie
+                                data={diversityWeekly}
+                                cx={200}
+                                cy={200}
+                                isAnimationActive={false}
+                                labelLine={false}
+                                label={renderCustomizedLabel}
+                                // label={item => renderCustomLabel(item)}
+                                outerRadius={150}
+                                fill="#8884d8"
+                                dataKey="diversity"
+                            >
+                                {
+                                    diversityWeekly.map((entry, index) =>
+                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                    )
+                                }
+                            </Pie>
+                            <Tooltip />
+                            <Legend wrapperStyle={{
+                                bottom: "-15px"
+                            }} />
+                        </PieChart>
+                    )}
                 </TabPanelContainer>
                 <TabPanelContainer value={page} index={2}>
-                    <BarChart
-                        width={550}
-                        height={400}
-                        data={diversityMonthly}
-                        margin={{
-                            top: 5, right: 5, left: 5, bottom: 5,
-                        }}
-                        barSize={50}
-                    >
-                        <XAxis dataKey="name" scale="point" padding={{left: 30, right: 30}}/>
-                        <YAxis type="number" domain={[0, 100]}/>
-                        <Tooltip/>
-                        {/*<Legend />*/}
-                        <CartesianGrid strokeDasharray="1"/>
-                        <Bar dataKey="diversity" fill="#000">
-                            {diversityMonthly.map((entry, index) => (
-                                <Cell key={entry.name} fill={entry.color}/>
-                            ))}
-                        </Bar>
-                    </BarChart>
+                    {diversityMonthly.length === 0 ? (
+                        <React.Fragment>
+                            <Skeleton animation="wave" height={30} width="100%"/>
+                        </React.Fragment>
+                    ) : (
+
+                        <PieChart width={400} height={400}>
+                            <Pie
+                                data={diversityMonthly}
+                                cx={200}
+                                cy={200}
+                                isAnimationActive={false}
+                                labelLine={false}
+                                label={renderCustomizedLabel}
+                                // label={item => renderCustomLabel(item)}
+                                outerRadius={150}
+                                fill="#8884d8"
+                                dataKey="diversity"
+                            >
+                                {
+                                    diversityMonthly.map((entry, index) =>
+                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                    )
+                                }
+                            </Pie>
+                            <Tooltip />
+                            <Legend wrapperStyle={{
+                                bottom: "-15px"
+                            }} />
+                        </PieChart>
+                    )}
                 </TabPanelContainer>
             </SwipeableViews>
 
