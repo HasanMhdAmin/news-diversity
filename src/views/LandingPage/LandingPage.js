@@ -4,12 +4,15 @@ import './LandingPage.css';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import WordcloudSection from "./WordcloudSection";
-import NewsDiversitySection from "./NewsDiversitySection";
 import ArticlesDialog from "../../components/ArticlesDialog/ArticlesDialog";
+import {NewsDiversitySection} from "./NewsDiversitySection";
 
 export default function LandingPage(props) {
     const [isArticlesDialogOpened, setArticlesDialogOpened] = React.useState(false);
     const [word, setWord] = React.useState("");
+    const [source, setSource] = React.useState("");
+
+    const newsDiversityChild = React.useRef();
 
     const handleOpenArticlesDialog = (word) => {
         setArticlesDialogOpened(true);
@@ -23,7 +26,10 @@ export default function LandingPage(props) {
 
 
     function onChangeValueHandler(val) {
-        console.log("click: " + val.name);
+        setSource(val)
+        if (val != null)
+            console.log("click: " + val.name);
+        newsDiversityChild.current.sourceUpdated(val)
     }
 
     return (
@@ -40,7 +46,7 @@ export default function LandingPage(props) {
                         <WordcloudSection handleOpenArticlesDialog={handleOpenArticlesDialog}/>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <NewsDiversitySection/>
+                        <NewsDiversitySection ref={newsDiversityChild} />
                     </Grid>
                 </Grid>
             </Container>

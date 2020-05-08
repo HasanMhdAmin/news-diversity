@@ -8,17 +8,40 @@ import EventIcon from "@material-ui/icons/Event";
 import SwipeableViews from "react-swipeable-views";
 import TabPanelContainer from "../../components/TabPanel/TabPanelContainer";
 
-import {Bar, BarChart, PieChart, Pie, CartesianGrid, Cell, Tooltip, XAxis, YAxis, Legend} from 'recharts';
+import {Cell, Legend, Pie, PieChart, Tooltip} from 'recharts';
 import {getDiversity} from "../../connection/Connection";
 import COLOR from "../../resources/Color";
 import Skeleton from "@material-ui/lab/Skeleton";
+import {makeStyles} from "@material-ui/core/styles";
 
-export default function NewsDiversitySection(props) {
+const useStyles = makeStyles((theme) => ({
+    footer: {
+        textAlign: "center",
+        marginTop: 25,
+        fontSize: 12
+    }
+}));
+
+export const NewsDiversitySection = React.forwardRef((props, ref) => {
     const [page, setPage] = React.useState(0);
     const [diversityDaily, setDiversityDaily] = React.useState([]);
     const [diversityWeekly, setDiversityWeekly] = React.useState([]);
     const [diversityMonthly, setDiversityMonthly] = React.useState([]);
+    const [source, setSource] = React.useState();
 
+    const classes = useStyles();
+
+    // called form reference in LandingPage.js
+    React.useImperativeHandle(ref, () => ({
+        sourceUpdated(source) {
+            console.log("Source: " + JSON.stringify(source))
+            setSource(source)
+            if (source != null)
+                sendRequests(source.domain)
+            else
+                sendRequests("")
+        }
+    }));
 
     const handleChange = (event, newValue) => {
         setPage(newValue);
@@ -29,16 +52,25 @@ export default function NewsDiversitySection(props) {
     };
 
     React.useEffect(() => {
-        getDiversity("", "daily").then(result => {
+        sendRequests("");
+    }, []);
+
+    function sendRequests(url) {
+        console.log("sendRequests for url: " + url)
+        setDiversityDaily([])
+        setDiversityWeekly([])
+        setDiversityMonthly([])
+        getDiversity(url, "daily").then(result => {
             setResult(result, setDiversityDaily);
         });
-        getDiversity("", "weekly").then(result => {
+        getDiversity(url, "weekly").then(result => {
             setResult(result, setDiversityWeekly);
         });
-        getDiversity("", "monthly").then(result => {
+        getDiversity(url, "monthly").then(result => {
             setResult(result, setDiversityMonthly);
         });
-    }, []);
+
+    }
 
     function setResult(result, setter) {
         // TODO match categories with server
@@ -63,15 +95,6 @@ export default function NewsDiversitySection(props) {
 
     }
 
-    const data = [
-        { name: 'Group A', diversity: 400 },
-        { name: 'Group B', diversity: 300 },
-        { name: 'Group C', diversity: 300 },
-        { name: 'Group D', diversity: 200 },
-    ];
-
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({
                                        cx, cy, midAngle, innerRadius, outerRadius, percent, index, name
@@ -82,33 +105,12 @@ export default function NewsDiversitySection(props) {
 
         return (
             <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-                <tspan dx="1.0em" dy="0.2em" alignmentBaseline="middle" fontSize="16">{`${(percent * 100).toFixed(0)}%`}</tspan>
+                <tspan dx="1.0em" dy="0.2em" alignmentBaseline="middle"
+                       fontSize="16">{`${(percent * 100).toFixed(0)}%`}</tspan>
             </text>
 
         );
     };
-
-    const renderCustomLabel = item => {
-
-        const radius = item.innerRadius + (item.outerRadius - item.innerRadius) * 0.5;
-        const x = item.cx + radius * Math.cos(-item.midAngle * RADIAN);
-        const y = item.cy + radius * Math.sin(-item.midAngle * RADIAN);
-
-        return (
-            <text
-                // fill={item.fill}
-                fill="white"
-                x={x}
-                y={y}
-                stroke='none'
-                alignmentBaseline='middle'
-                className='recharts-text recharts-pie-label-text'
-                textAnchor={item.x > item.cx ? 'start' : 'end'}
-            >
-                <tspan x={item.x} textAnchor={item.textAnchor} dy='0em'>{item.name}</tspan>
-            </text>
-        )
-    }
 
     return (
         <div>
@@ -149,14 +151,14 @@ export default function NewsDiversitySection(props) {
                             >
                                 {
                                     diversityDaily.map((entry, index) =>
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                        <Cell key={`cell-${index}`} fill={entry.color}/>
                                     )
                                 }
                             </Pie>
-                            <Tooltip />
+                            <Tooltip/>
                             <Legend wrapperStyle={{
                                 bottom: "-15px"
-                            }} />
+                            }}/>
                         </PieChart>
                     )}
                 </TabPanelContainer>
@@ -182,14 +184,14 @@ export default function NewsDiversitySection(props) {
                             >
                                 {
                                     diversityWeekly.map((entry, index) =>
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                        <Cell key={`cell-${index}`} fill={entry.color}/>
                                     )
                                 }
                             </Pie>
-                            <Tooltip />
+                            <Tooltip/>
                             <Legend wrapperStyle={{
                                 bottom: "-15px"
-                            }} />
+                            }}/>
                         </PieChart>
                     )}
                 </TabPanelContainer>
@@ -215,19 +217,27 @@ export default function NewsDiversitySection(props) {
                             >
                                 {
                                     diversityMonthly.map((entry, index) =>
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                        <Cell key={`cell-${index}`} fill={entry.color}/>
                                     )
                                 }
                             </Pie>
-                            <Tooltip />
+                            <Tooltip/>
                             <Legend wrapperStyle={{
                                 bottom: "-15px"
-                            }} />
+                            }}/>
                         </PieChart>
                     )}
                 </TabPanelContainer>
             </SwipeableViews>
-
+            {source != null ? (
+                <div className={classes.footer}>
+                    This data represent the diversity of: {source.name}
+                </div>
+            ) : (
+                <div className={classes.footer}>
+                    This data represent the diversity GLOBALLY
+                </div>)
+            }
         </div>
     );
-}
+})

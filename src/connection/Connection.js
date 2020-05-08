@@ -54,6 +54,7 @@ function getKeyword(url, period) {
 function getDiversity(url, period) {
     let axiosConfig = {
         params: {
+            url: url,
             period: period,
         }
     };
