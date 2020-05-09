@@ -29,10 +29,10 @@ const useStyles = makeStyles(() => ({
     entertainmentBg: {
         background: COLOR.LILAC,
     },
-    scienceBg: {
+    scienceTechBg: {
         background: COLOR.BLUE,
     },
-    technologyBg: {
+    sportBg: {
         background: COLOR.BROWN,
     }
 }));
@@ -50,10 +50,10 @@ export default function TagView(props) {
                 return classes.healthBg
             case 'Entertainment':
                 return classes.entertainmentBg
-            case 'Science':
-                return classes.scienceBg
-            case 'Technology':
-                return classes.technologyBg
+            case 'Science & Technology':
+                return classes.scienceTechBg
+            case 'Sport':
+                return classes.sportBg
             default:
                 return classes.businessBg
         }

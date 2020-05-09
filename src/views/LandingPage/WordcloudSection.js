@@ -7,15 +7,38 @@ import DateRangeIcon from "@material-ui/icons/DateRange";
 import EventIcon from "@material-ui/icons/Event";
 import Wordcloud from "../../components/Wordcloud/Wordcloud";
 import TabPanelContainer from "../../components/TabPanel/TabPanelContainer";
-import {getKeyword} from "../../connection/Connection";
+import {getDiversity, getKeyword} from "../../connection/Connection";
 import SwipeableViews from "react-swipeable-views";
+import {makeStyles} from "@material-ui/core/styles";
 
 
-export default function WordcloudSection(props) {
+const useStyles = makeStyles((theme) => ({
+    footer: {
+        textAlign: "center",
+        marginTop: 25,
+        fontSize: 12
+    }
+}));
+
+export const WordcloudSection = React.forwardRef((props, ref) => {
     const [wordcloudPage, setWordcloudPage] = React.useState(0);
     const [wordsDaily, setWordsDaily] = React.useState([]);
     const [wordsWeekly, setWordsWeekly] = React.useState([]);
     const [wordsMonthly, setWordsMonthly] = React.useState([]);
+    const [source, setSource] = React.useState();
+
+    const classes = useStyles();
+    // called form reference in LandingPage.js
+    React.useImperativeHandle(ref, () => ({
+        sourceUpdated(source) {
+            console.log("Source: " + JSON.stringify(source))
+            setSource(source)
+            if (source != null)
+                sendRequests(source.domain)
+            else
+                sendRequests("")
+        }
+    }));
 
     const handleWordcloudChange = (event, newValue) => {
         setWordcloudPage(newValue);
@@ -26,19 +49,25 @@ export default function WordcloudSection(props) {
     };
 
     React.useEffect(() => {
-        getKeyword("", "daily").then(result => {
-            // console.log("wordcloud: " + result.data);
+        sendRequests("");
+    }, []);
+
+    function sendRequests(url) {
+        console.log("sendRequests for url: " + url)
+        setWordsDaily([])
+        setWordsWeekly([])
+        setWordsMonthly([])
+        getKeyword(url, "daily").then(result => {
             setWordsDaily(result.data);
         });
-        getKeyword("", "weekly").then(result => {
-            // console.log("wordcloud: " + result.data);
+        getKeyword(url, "weekly").then(result => {
             setWordsWeekly(result.data);
         });
-        getKeyword("", "monthly").then(result => {
-            // console.log("wordcloud: " + result.data);
+        getKeyword(url, "monthly").then(result => {
             setWordsMonthly(result.data);
         });
-    }, []);
+
+    }
 
     const onWordClickCallback = {
         getWordTooltip: word => `The word "${word.text}" appears ${word.value} times.`,
@@ -77,7 +106,15 @@ export default function WordcloudSection(props) {
                 </TabPanelContainer>
             </SwipeableViews>
 
-
+            {source != null ? (
+                <div className={classes.footer}>
+                    This data represent the diversity of: {source.name}
+                </div>
+            ) : (
+                <div className={classes.footer}>
+                    This data represent the diversity GLOBALLY
+                </div>)
+            }
         </div>
     );
-}
+})

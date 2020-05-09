@@ -35,6 +35,7 @@ function getSources() {
 function getKeyword(url, period) {
     let axiosConfig = {
         params: {
+            url: url,
             period: period,
             limit: 50
         }

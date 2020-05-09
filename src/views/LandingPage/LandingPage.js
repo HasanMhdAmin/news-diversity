@@ -3,9 +3,9 @@ import SourceAutocomplete from "../../components/Autocomplete/Autocomplete";
 import './LandingPage.css';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import WordcloudSection from "./WordcloudSection";
 import ArticlesDialog from "../../components/ArticlesDialog/ArticlesDialog";
 import {NewsDiversitySection} from "./NewsDiversitySection";
+import {WordcloudSection} from "./WordcloudSection";
 
 export default function LandingPage(props) {
     const [isArticlesDialogOpened, setArticlesDialogOpened] = React.useState(false);
@@ -13,6 +13,7 @@ export default function LandingPage(props) {
     const [source, setSource] = React.useState("");
 
     const newsDiversityChild = React.useRef();
+    const wordCloudChild = React.useRef();
 
     const handleOpenArticlesDialog = (word) => {
         setArticlesDialogOpened(true);
@@ -30,6 +31,7 @@ export default function LandingPage(props) {
         if (val != null)
             console.log("click: " + val.name);
         newsDiversityChild.current.sourceUpdated(val)
+        wordCloudChild.current.sourceUpdated(val)
     }
 
     return (
@@ -43,7 +45,10 @@ export default function LandingPage(props) {
 
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
-                        <WordcloudSection handleOpenArticlesDialog={handleOpenArticlesDialog}/>
+                        <WordcloudSection
+                            ref={wordCloudChild}
+                            handleOpenArticlesDialog={handleOpenArticlesDialog}
+                        />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <NewsDiversitySection ref={newsDiversityChild} />
