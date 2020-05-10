@@ -71,10 +71,11 @@ function getDiversity(url, period) {
 }
 
 
-function getArticlesByKeyword(q, page) {
+function getArticlesByKeyword(q, url, page) {
     let axiosConfig = {
         params: {
             q: q,
+            url: url,
             page: page
         }
     };

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ArticlesDialog(props) {
+export const ArticlesDialog = React.forwardRef((props, ref) => {
 
     const [articles, setArticles] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
@@ -135,7 +135,10 @@ export default function ArticlesDialog(props) {
     function getData() {
         console.log("send request for : " + props.word);
         if (props.word.length > 0) {
-            getArticlesByKeyword(props.word, "1").then(result => {
+            var url = "";
+            if (props.source != null)
+                url = props.source.domain
+            getArticlesByKeyword(props.word, url, "1").then(result => {
                 setArticles(result.data)
                 setLoading(false)
             });
@@ -189,4 +192,4 @@ export default function ArticlesDialog(props) {
         </Dialog>
 
     );
-}
+})

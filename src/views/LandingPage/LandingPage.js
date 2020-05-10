@@ -3,9 +3,9 @@ import SourceAutocomplete from "../../components/Autocomplete/Autocomplete";
 import './LandingPage.css';
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import ArticlesDialog from "../../components/ArticlesDialog/ArticlesDialog";
 import {NewsDiversitySection} from "./NewsDiversitySection";
 import {WordcloudSection} from "./WordcloudSection";
+import {ArticlesDialog} from "../../components/ArticlesDialog/ArticlesDialog";
 
 export default function LandingPage(props) {
     const [isArticlesDialogOpened, setArticlesDialogOpened] = React.useState(false);
@@ -59,6 +59,7 @@ export default function LandingPage(props) {
             <ArticlesDialog isArticlesDialogOpened={isArticlesDialogOpened}
                             handleCloseArticlesDialog={handleCloseArticlesDialog}
                             word = {word}
+                            source={source}
             />
 
 
