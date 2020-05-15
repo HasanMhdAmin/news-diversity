@@ -8,7 +8,7 @@ import EventIcon from "@material-ui/icons/Event";
 import SwipeableViews from "react-swipeable-views";
 import TabPanelContainer from "../../components/TabPanel/TabPanelContainer";
 
-import {Cell, Legend, Pie, PieChart, Tooltip} from 'recharts';
+import {Cell, Legend, Pie, PieChart, Sector, Tooltip} from 'recharts';
 import {getDiversity} from "../../connection/Connection";
 import COLOR from "../../resources/Color";
 import Skeleton from "@material-ui/lab/Skeleton";
@@ -19,7 +19,12 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center",
         marginTop: 25,
         fontSize: 12
-    }
+    },
+    cell: {
+        "&:hover": {
+            cursor: "pointer"
+        }
+    },
 }));
 
 export const NewsDiversitySection = React.forwardRef((props, ref) => {
@@ -28,6 +33,7 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
     const [diversityWeekly, setDiversityWeekly] = React.useState([]);
     const [diversityMonthly, setDiversityMonthly] = React.useState([]);
     const [source, setSource] = React.useState();
+    const [activeCell, setActiveCell] = React.useState(null);
 
     const classes = useStyles();
 
@@ -112,6 +118,34 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
         );
     };
 
+
+    const onHover = (data, index) => {
+        setActiveCell(index)
+    };
+    const onHoverOut = (data, index) => {
+        setActiveCell(null)
+    };
+    const renderActiveShape = (props) => {
+        const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
+            fill, payload, percent, value } = props;
+
+        return (
+            <g>
+                <Sector
+                    className={classes.cell}
+                    cx={cx}
+                    cy={cy}
+                    innerRadius={innerRadius}
+                    outerRadius={outerRadius+15}
+                    startAngle={startAngle}
+                    endAngle={endAngle}
+                    onClick={(e) => { console.log(payload.payload)}}
+                    fill={fill}
+                />
+            </g>
+        );
+    };
+
     return (
         <div>
             <AppBar position="static" color="default">
@@ -148,14 +182,18 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
                                 outerRadius={150}
                                 fill="#8884d8"
                                 dataKey="diversity"
+                                activeIndex={activeCell}
+                                activeShape={renderActiveShape}
+                                onMouseEnter={onHover}
+                                onMouseLeave={onHoverOut}
                             >
                                 {
                                     diversityDaily.map((entry, index) =>
-                                        <Cell key={`cell-${index}`} fill={entry.color}/>
+                                        <Cell key={`cell-${index}`} fill={entry.color} />
                                     )
                                 }
                             </Pie>
-                            <Tooltip/>
+                            <Tooltip cursor={false}/>
                             <Legend wrapperStyle={{
                                 bottom: "-15px"
                             }}/>
