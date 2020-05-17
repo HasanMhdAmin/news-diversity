@@ -5,13 +5,15 @@ const SOURCE = BASE_API_URL + "source";
 const KEYWORD = BASE_API_URL + "keyword";
 const DIVERSITY = BASE_API_URL + "diversity";
 const ARTICLES_BY_KEYWORD = BASE_API_URL + "articles/keyword";
+const ARTICLES_BY_CATEGORY = BASE_API_URL + "articles/category";
 
 
 export {
     getSources,
     getKeyword,
     getDiversity,
-    getArticlesByKeyword
+    getArticlesByKeyword,
+    getArticlesByCategory
 };
 
 function getSources() {
@@ -83,6 +85,26 @@ function getArticlesByKeyword(q, url, page) {
         .then(response => {
             console.log("ARTICLES_BY_KEYWORD: connection ==> ");
             // console.log("ARTICLES_BY_KEYWORD: connection ==> " + JSON.stringify(response));
+            return response
+        })
+        .catch(error => {
+            console.log("ARTICLES_BY_KEYWORD : " + JSON.stringify(error));
+            return error
+        });
+}
+
+
+function getArticlesByCategory(q, url, page) {
+    let axiosConfig = {
+        params: {
+            q: q,
+            url: url,
+            page: page
+        }
+    };
+    return axios.get(ARTICLES_BY_CATEGORY, axiosConfig)
+        .then(response => {
+            console.log("ARTICLES_BY_CATEGORY: connection ==> ");
             return response
         })
         .catch(error => {

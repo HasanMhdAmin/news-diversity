@@ -10,6 +10,7 @@ import {ArticlesDialog} from "../../components/ArticlesDialog/ArticlesDialog";
 export default function LandingPage(props) {
     const [isArticlesDialogOpened, setArticlesDialogOpened] = React.useState(false);
     const [word, setWord] = React.useState("");
+    const [category, setCategory] = React.useState("");
     const [source, setSource] = React.useState("");
 
     const newsDiversityChild = React.useRef();
@@ -19,6 +20,14 @@ export default function LandingPage(props) {
         setArticlesDialogOpened(true);
         console.log("LandingPage: word" + word)
         setWord(word)
+        setCategory("")
+    };
+
+    const handleOpenArticlesByCategoryDialog = (category) => {
+        setArticlesDialogOpened(true);
+        console.log("LandingPage: category" + JSON.stringify(category))
+        setCategory(category.name)
+        setWord("")
     };
 
     const handleCloseArticlesDialog = () => {
@@ -51,7 +60,9 @@ export default function LandingPage(props) {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <NewsDiversitySection ref={newsDiversityChild} />
+                        <NewsDiversitySection
+                            ref={newsDiversityChild}
+                            handleOpenArticlesByCategoryDialog={handleOpenArticlesByCategoryDialog}/>
                     </Grid>
                 </Grid>
             </Container>
@@ -59,6 +70,7 @@ export default function LandingPage(props) {
             <ArticlesDialog isArticlesDialogOpened={isArticlesDialogOpened}
                             handleCloseArticlesDialog={handleCloseArticlesDialog}
                             word = {word}
+                            category = {category}
                             source={source}
             />
 

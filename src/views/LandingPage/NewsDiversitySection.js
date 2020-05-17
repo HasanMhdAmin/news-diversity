@@ -125,9 +125,9 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
     const onHoverOut = (data, index) => {
         setActiveCell(null)
     };
-    const renderActiveShape = (props) => {
+    const renderActiveShape = (_props) => {
         const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
-            fill, payload, percent, value } = props;
+            fill, payload, percent, value } = _props;
 
         return (
             <g>
@@ -139,7 +139,9 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
                     outerRadius={outerRadius+15}
                     startAngle={startAngle}
                     endAngle={endAngle}
-                    onClick={(e) => { console.log(payload.payload)}}
+                    onClick={(e) => {
+                        props.handleOpenArticlesByCategoryDialog(payload.payload)
+                    }}
                     fill={fill}
                 />
             </g>

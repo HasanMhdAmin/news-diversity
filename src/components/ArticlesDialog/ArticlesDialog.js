@@ -12,7 +12,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import TagView from "../TagView/TagView";
 import Mercury from "@postlight/mercury-parser";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import {getArticlesByKeyword} from "../../connection/Connection";
+import {getArticlesByCategory, getArticlesByKeyword} from "../../connection/Connection";
 
 const useStyles = makeStyles((theme) => ({
     card: {
@@ -134,11 +134,16 @@ export const ArticlesDialog = React.forwardRef((props, ref) => {
 
     function getData() {
         console.log("send request for : " + props.word);
+        let url = "";
+        if (props.source != null)
+            url = props.source.domain
         if (props.word.length > 0) {
-            var url = "";
-            if (props.source != null)
-                url = props.source.domain
             getArticlesByKeyword(props.word, url, "1").then(result => {
+                setArticles(result.data)
+                setLoading(false)
+            });
+        } else if (props.category.length > 0) {
+            getArticlesByCategory(props.category, url, "1").then(result => {
                 setArticles(result.data)
                 setLoading(false)
             });
