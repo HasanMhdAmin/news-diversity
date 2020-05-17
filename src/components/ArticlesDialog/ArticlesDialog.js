@@ -162,6 +162,29 @@ export const ArticlesDialog = React.forwardRef((props, ref) => {
         console.log(" onExited");
     }
 
+    const header = () => {
+        let url = "";
+        if (props.source != null) {
+            url = props.source.domain
+        }
+        if (props.word.length > 0) {
+            if (url.length > 0)
+                return <div>Articles related to `<b>{props.word}</b>`
+                    <br/>
+            Published by <b>{props.source.name}</b></div>;
+            return <div>Articles related to `<b>{props.word}</b>`</div>;
+        }
+
+        if (props.category.length > 0) {
+            if (url.length > 0)
+                return <div>Articles belong to <TagView items={[props.category]}/>
+                    <br/>
+                    Published by <b>{props.source.name}</b></div>;
+            return <div>Articles belong to <TagView items={[props.category]} header/> </div>;
+        }
+
+    }
+
     return (
         <Dialog
             open={props.isArticlesDialogOpened}
@@ -173,7 +196,7 @@ export const ArticlesDialog = React.forwardRef((props, ref) => {
             aria-describedby="scroll-dialog-description"
         >
             <DialogTitle id="scroll-dialog-title">
-                Articles related to `<b>{props.word}</b>`
+                {header()}
             </DialogTitle>
             <DialogContent dividers={true}>
                 {loading ? (

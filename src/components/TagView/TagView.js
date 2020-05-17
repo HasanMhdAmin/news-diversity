@@ -4,6 +4,10 @@ import {makeStyles} from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles(() => ({
+    container: {
+        display: "inline-block",
+
+    },
     item: {
         display: "inline-block",
         paddingRight: 10,
@@ -15,6 +19,11 @@ const useStyles = makeStyles(() => ({
         color: "#fff",
         fontSize: 12,
         fontWeight: "bold",
+    },
+    itemInHeader: {
+        paddingTop: 0,
+        paddingBottom: 0,
+        fontSize: 20
     },
     // TODO match categories with server
     businessBg: {
@@ -39,6 +48,8 @@ const useStyles = makeStyles(() => ({
 
 export default function TagView(props) {
     const classes = useStyles();
+    const { header = false } = props;
+    console.log("header: " + header)
 
     const bgColor = (item) => {
         switch (item) {
@@ -59,14 +70,20 @@ export default function TagView(props) {
         }
     };
 
+    const isHeader = (item) => {
+
+        if (header)
+            return classes.itemInHeader
+    };
+
     const items = props.items.map((item, index) =>
-        <div key={index} className={[classes.item, bgColor(item)].join(' ')}>
+        <div key={index} className={[classes.item, bgColor(item), isHeader()].join(' ')}>
             {item}
         </div>
     );
 
     return (
-        <div>
+        <div className={classes.container}>
             {items}
         </div>
     );

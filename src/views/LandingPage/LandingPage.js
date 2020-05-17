@@ -11,7 +11,7 @@ export default function LandingPage(props) {
     const [isArticlesDialogOpened, setArticlesDialogOpened] = React.useState(false);
     const [word, setWord] = React.useState("");
     const [category, setCategory] = React.useState("");
-    const [source, setSource] = React.useState("");
+    const [source, setSource] = React.useState(null);
 
     const newsDiversityChild = React.useRef();
     const wordCloudChild = React.useRef();
