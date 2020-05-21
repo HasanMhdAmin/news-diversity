@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 20,
         marginTop: 5,
         marginBottom: 10,
+        color: "black",
+        textDecoration: 'none',
         "&:hover": {
             textDecoration: "underline"
         }
@@ -38,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
     },
     source: {
         fontSize: 12,
+    },
+    date: {
+        fontSize: 12,
+        marginTop: 15,
+        textAlign: 'right'
     }
 }));
 
@@ -65,17 +72,31 @@ export const ArticlesDialog = React.forwardRef((props, ref) => {
             }
         }, []);
 
+        const parseDate = (fullDate) => {
+            var date = fullDate.split('T')[0]
+            fullDate = new Date(date)
+            var twoDigitMonth = (parseInt(fullDate.getMonth() + 1)) + "";
+            if (twoDigitMonth.length === 1)
+                twoDigitMonth = "0" + twoDigitMonth;
+            var twoDigitDate = fullDate.getDate() + "";
+            if (twoDigitDate.length === 1)
+                twoDigitDate = "0" + twoDigitDate;
+            return twoDigitDate + "/" + twoDigitMonth + "/" + fullDate.getFullYear();
+        };
+
         return (
             <Card className={classes.card}>
 
                 {mercuryLoading || loading ? (
                     <Skeleton animation="wave" variant="rect" className={classes.media}/>
                 ) : (
-                    <CardMedia
-                        className={classes.media}
-                        image={mercuryItem.lead_image_url}
-                        title="Ted talk"
-                    />
+                    <a href={article.link} target="_blank">
+                        <CardMedia
+                            className={classes.media}
+                            image={mercuryItem.lead_image_url}
+                            title="Ted talk"
+                        />
+                    </a>
                 )}
 
                 <CardContent>
@@ -96,13 +117,22 @@ export const ArticlesDialog = React.forwardRef((props, ref) => {
                                 <Skeleton animation="wave" height={30} width="100%"/>
                             </React.Fragment>
                         ) : (
-                            <CardActionArea
-                                onClick={() => window.open(article.link, '_blank')}
-                            >
-                                <div className={classes.title}>
-                                    {article.title}
-                                </div>
-                            </CardActionArea>
+                            <a className={classes.title} href={article.link} target="_blank">
+                                <CardActionArea
+                                    // onClick={() => window.open(article.link, '_blank')}
+                                >
+                                    {article.title.length === 0 ? (
+                                        <div className={classes.title}>
+                                            {mercuryItem.title}
+                                        </div>
+                                    ) : (
+                                        <div className={classes.title}>
+                                            {article.title}
+                                        </div>
+
+                                    )}
+                                </CardActionArea>
+                            </a>
                         )}
 
                         {loading ? (
@@ -123,6 +153,16 @@ export const ArticlesDialog = React.forwardRef((props, ref) => {
                         ) : (
                             <div className={classes.description}>
                                 {mercuryItem.excerpt}
+                            </div>
+                        )}
+
+                        {loading ? (
+                            <React.Fragment>
+                                <Skeleton animation="wave" height={10} width="30%"/>
+                            </React.Fragment>
+                        ) : (
+                            <div className={classes.date}>
+                                Published on <b>{parseDate(article.pubDate)}</b>
                             </div>
                         )}
                     </div>
@@ -171,7 +211,7 @@ export const ArticlesDialog = React.forwardRef((props, ref) => {
             if (url.length > 0)
                 return <div>Articles related to `<b>{props.word}</b>`
                     <br/>
-            Published by <b>{props.source.name}</b></div>;
+                    Published by <b>{props.source.name}</b></div>;
             return <div>Articles related to `<b>{props.word}</b>`</div>;
         }
 
@@ -180,7 +220,7 @@ export const ArticlesDialog = React.forwardRef((props, ref) => {
                 return <div>Articles belong to <TagView items={[props.category]}/>
                     <br/>
                     Published by <b>{props.source.name}</b></div>;
-            return <div>Articles belong to <TagView items={[props.category]} header/> </div>;
+            return <div>Articles belong to <TagView items={[props.category]} header/></div>;
         }
 
     }

@@ -49,7 +49,6 @@ const useStyles = makeStyles(() => ({
 export default function TagView(props) {
     const classes = useStyles();
     const { header = false } = props;
-    console.log("header: " + header)
 
     const bgColor = (item) => {
         switch (item) {
