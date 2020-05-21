@@ -99,10 +99,10 @@ export const WordcloudSection = React.forwardRef((props, ref) => {
                     <Wordcloud words={wordsDaily} callback={onWordClickCallback}/>
                 </TabPanelContainer>
                 <TabPanelContainer value={wordcloudPage} index={1}>
-                    <Wordcloud words={wordsWeekly}/>
+                    <Wordcloud words={wordsWeekly} callback={onWordClickCallback}/>
                 </TabPanelContainer>
                 <TabPanelContainer value={wordcloudPage} index={2}>
-                    <Wordcloud words={wordsMonthly}/>
+                    <Wordcloud words={wordsMonthly} callback={onWordClickCallback}/>
                 </TabPanelContainer>
             </SwipeableViews>
 

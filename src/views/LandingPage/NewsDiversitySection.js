@@ -221,6 +221,10 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
                                 outerRadius={150}
                                 fill="#8884d8"
                                 dataKey="diversity"
+                                activeIndex={activeCell}
+                                activeShape={renderActiveShape}
+                                onMouseEnter={onHover}
+                                onMouseLeave={onHoverOut}
                             >
                                 {
                                     diversityWeekly.map((entry, index) =>
@@ -254,6 +258,10 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
                                 outerRadius={150}
                                 fill="#8884d8"
                                 dataKey="diversity"
+                                activeIndex={activeCell}
+                                activeShape={renderActiveShape}
+                                onMouseEnter={onHover}
+                                onMouseLeave={onHoverOut}
                             >
                                 {
                                     diversityMonthly.map((entry, index) =>
