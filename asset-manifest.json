@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/news-diversity/static/css/main.070578b3.chunk.css",
+    "main.js": "/news-diversity/static/js/main.b18a2dca.chunk.js",
+    "main.js.map": "/news-diversity/static/js/main.b18a2dca.chunk.js.map",
+    "runtime-main.js": "/news-diversity/static/js/runtime-main.c7247b97.js",
+    "runtime-main.js.map": "/news-diversity/static/js/runtime-main.c7247b97.js.map",
+    "static/css/2.6b8b0033.chunk.css": "/news-diversity/static/css/2.6b8b0033.chunk.css",
+    "static/js/2.8e9a4ff5.chunk.js": "/news-diversity/static/js/2.8e9a4ff5.chunk.js",
+    "static/js/2.8e9a4ff5.chunk.js.map": "/news-diversity/static/js/2.8e9a4ff5.chunk.js.map",
+    "index.html": "/news-diversity/index.html",
+    "precache-manifest.bd3d7a192083ee8cda8ae03ce561a876.js": "/news-diversity/precache-manifest.bd3d7a192083ee8cda8ae03ce561a876.js",
+    "service-worker.js": "/news-diversity/service-worker.js",
+    "static/css/2.6b8b0033.chunk.css.map": "/news-diversity/static/css/2.6b8b0033.chunk.css.map",
+    "static/css/main.070578b3.chunk.css.map": "/news-diversity/static/css/main.070578b3.chunk.css.map",
+    "static/js/2.8e9a4ff5.chunk.js.LICENSE.txt": "/news-diversity/static/js/2.8e9a4ff5.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/news-diversity/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c7247b97.js",
+    "static/css/2.6b8b0033.chunk.css",
+    "static/js/2.8e9a4ff5.chunk.js",
+    "static/css/main.070578b3.chunk.css",
+    "static/js/main.b18a2dca.chunk.js"
+  ]
+}
