@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const BASE_API_URL = 'http://192.168.1.103:7777/api/';
+// const BASE_API_URL = 'http://192.168.1.103:7777/api/';
+const BASE_API_URL = 'http://ariadne.is.inf.uni-due.de:7777/api/';
+
 const SOURCE = BASE_API_URL + "source";
 const KEYWORD = BASE_API_URL + "keyword";
 const DIVERSITY = BASE_API_URL + "diversity";

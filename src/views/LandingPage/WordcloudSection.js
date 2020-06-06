@@ -108,11 +108,11 @@ export const WordcloudSection = React.forwardRef((props, ref) => {
 
             {source != null ? (
                 <div className={classes.footer}>
-                    This data represent the diversity of: {source.name}
+                    This data represent the keywords of: {source.name}
                 </div>
             ) : (
                 <div className={classes.footer}>
-                    This data represent the diversity GLOBALLY
+                    This data represent the keywords GLOBALLY
                 </div>)
             }
         </div>
