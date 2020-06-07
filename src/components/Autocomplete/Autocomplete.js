@@ -5,10 +5,38 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import {getSources} from "../../connection/Connection";
 import Container from "@material-ui/core/Container";
+import {makeStyles} from "@material-ui/core/styles";
 
 const filter = createFilterOptions();
 
+
+const useStyles = makeStyles((theme) => ({
+    inputRoot: {
+        color: "#ffffff",
+        "& .MuiFormLabel-root": {
+            color: "#ffffff"
+        },
+        "& .MuiAutocomplete-inputRoot": {
+            color: "#ffffff"
+        },
+        "& .MuiButtonBase-root": {
+            color: "#ffffff"
+        },
+        "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#ffffff"
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#ffffff"
+        },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#ffffff"
+        }
+    }
+}));
+
 export default function SourceAutocomplete(props) {
+    const classes = useStyles();
+
     const [value, setValue] = React.useState(null);
     const [open, setOpen] = React.useState(false);
     const [options, setOptions] = React.useState([]);
@@ -69,6 +97,7 @@ export default function SourceAutocomplete(props) {
                 getOptionLabel={option => option.name}
                 options={options}
                 loading={loading}
+                className={classes.inputRoot}
                 renderInput={params => (
                     <TextField
                         {...params}
