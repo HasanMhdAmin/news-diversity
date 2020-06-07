@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
             cursor: "pointer"
         }
     },
+    tabContent: {
+        textAlign: "-webkit-center",
+    }
 }));
 
 export const NewsDiversitySection = React.forwardRef((props, ref) => {
@@ -164,6 +167,7 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
             <SwipeableViews
                 index={page}
                 onChangeIndex={handleChangeIndex}
+                className={classes.tabContent}
             >
                 <TabPanelContainer value={page} index={0}>
                     {diversityDaily.length === 0 ? (
