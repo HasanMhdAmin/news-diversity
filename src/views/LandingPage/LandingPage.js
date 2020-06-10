@@ -9,6 +9,7 @@ import {ArticlesDialog} from "../../components/ArticlesDialog/ArticlesDialog";
 import {makeStyles} from "@material-ui/core/styles";
 import {Card} from "@material-ui/core";
 
+const WORLD_IMAGE = process.env.PUBLIC_URL + '/world.svg';
 
 const useStyles = makeStyles((theme) => ({
     footerContainer: {
@@ -35,7 +36,13 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 15,
         boxShadow: "0px 0px 20px 10px rgba(0,0,0,0.2)",
         padding: 45,
-        background: "linear-gradient(90deg, rgba(29,115,255,1) 0%, rgba(22,35,126,1) 100%)",
+        backgroundImage: "url(" + WORLD_IMAGE + ")," +
+        // backgroundImage: `url(${Papyrus})` +
+            `linear-gradient(90deg, rgba(29,115,255,1) 0%, rgba(22,35,126,1) 100%)`,
+        backgroundRepeat: "no-repeat,repeat",
+        backgroundSize: "40%,auto",
+        backgroundPosition: "-76px 6px,0 0",
+        // background: "linear-gradient(90deg, rgba(29,115,255,1) 0%, rgba(22,35,126,1) 100%)",
     }
 
 }));
