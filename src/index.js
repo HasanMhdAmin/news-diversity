@@ -5,6 +5,8 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import LandingPage from "./views/LandingPage/LandingPage";
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
+import {NewsDiversitySection} from "./views/LandingPage/NewsDiversitySection";
+import {WordcloudSection} from "./views/LandingPage/WordcloudSection";
 
 const theme = createMuiTheme({
     palette: {
@@ -20,7 +22,10 @@ ReactDOM.render(
         <BrowserRouter>
             <Switch>
                 <Route path="/test" component={App}/>
+                <Route path="/diversity" component={NewsDiversitySection}/>
+                <Route path="/keyword" component={WordcloudSection}/>
                 <Route path="/" component={LandingPage}/>
+
             </Switch>
         </BrowserRouter>
     </MuiThemeProvider>,

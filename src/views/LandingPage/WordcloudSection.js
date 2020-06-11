@@ -52,7 +52,23 @@ export const WordcloudSection = React.forwardRef((props, ref) => {
         sendRequests("");
     }, []);
 
+    function getUrlFromHref() {
+        let href = window.location.href;
+        let x = href.indexOf("?url=")
+        if (x === -1)
+            return "";
+        var res = href.substring(x + "?url=".length, href.length);
+        return res;
+    }
+
     function sendRequests(url) {
+        let href = getUrlFromHref()
+        console.log("URL:1 " + href);
+        if (href !== "") {
+            url = href
+        }
+        console.log("URL:2 " + url);
+
         console.log("sendRequests for url: " + url)
         setWordsDaily([])
         setWordsWeekly([])
@@ -71,8 +87,30 @@ export const WordcloudSection = React.forwardRef((props, ref) => {
 
     const onWordClickCallback = {
         getWordTooltip: word => `The word "${word.text}" appears ${word.value} times.`,
-        onWordClick: word => props.handleOpenArticlesDialog(word.text)
+        onWordClick: word =>
+        {
+            if (getUrlFromHref() === "") {
+                props.handleOpenArticlesDialog(word.text)
+            }
+        }
     };
+
+
+    function viewFooter() {
+        if (getUrlFromHref() === "") {
+            if (source != null) {
+                return <div className={classes.footer}>
+                    This data represent the keywords of: {source.name}
+                </div>;
+            } else {
+                return <div className={classes.footer}>
+                    This data represent the keywords GLOBALLY
+                </div>;
+            }
+        } else {
+            return null;
+        }
+    }
 
 
     return (
@@ -106,15 +144,8 @@ export const WordcloudSection = React.forwardRef((props, ref) => {
                 </TabPanelContainer>
             </SwipeableViews>
 
-            {source != null ? (
-                <div className={classes.footer}>
-                    This data represent the keywords of: {source.name}
-                </div>
-            ) : (
-                <div className={classes.footer}>
-                    This data represent the keywords GLOBALLY
-                </div>)
-            }
+            {viewFooter()}
+
         </div>
     );
 })

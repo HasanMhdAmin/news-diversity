@@ -64,7 +64,23 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
         sendRequests("");
     }, []);
 
+    function getUrlFromHref() {
+        let href = window.location.href;
+        let x = href.indexOf("?url=")
+        if (x === -1)
+            return "";
+        var res = href.substring(x + "?url=".length, href.length);
+        return res;
+    }
+
     function sendRequests(url) {
+        let href = getUrlFromHref()
+        console.log("URL:1 " + href);
+        if (href !== "") {
+            url = href
+        }
+        console.log("URL:2 " + url);
+
         console.log("sendRequests for url: " + url)
         setDiversityDaily([])
         setDiversityWeekly([])
@@ -143,13 +159,31 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
                     startAngle={startAngle}
                     endAngle={endAngle}
                     onClick={(e) => {
-                        props.handleOpenArticlesByCategoryDialog(payload.payload)
+                        if (getUrlFromHref() === "") {
+                            props.handleOpenArticlesByCategoryDialog(payload.payload)
+                        }
                     }}
                     fill={fill}
                 />
             </g>
         );
     };
+
+    function viewFooter() {
+        if (getUrlFromHref() === "") {
+            if (source != null) {
+                return <div className={classes.footer}>
+                    This data represent the diversity of: {source.name}
+                </div>;
+            } else {
+                return <div className={classes.footer}>
+                    This data represent the diversity GLOBALLY
+                </div>;
+            }
+        } else {
+            return null;
+        }
+    }
 
     return (
         <div>
@@ -281,15 +315,9 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
                     )}
                 </TabPanelContainer>
             </SwipeableViews>
-            {source != null ? (
-                <div className={classes.footer}>
-                    This data represent the diversity of: {source.name}
-                </div>
-            ) : (
-                <div className={classes.footer}>
-                    This data represent the diversity GLOBALLY
-                </div>)
-            }
+
+            {viewFooter()}
+
         </div>
     );
 })
