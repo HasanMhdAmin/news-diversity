@@ -8,7 +8,7 @@ import EventIcon from "@material-ui/icons/Event";
 import SwipeableViews from "react-swipeable-views";
 import TabPanelContainer from "../../components/TabPanel/TabPanelContainer";
 
-import {Cell, Legend, Pie, PieChart, Sector, Tooltip} from 'recharts';
+import {Cell, Legend, Pie, PieChart, ResponsiveContainer, Sector, Tooltip} from 'recharts';
 import {getDiversity} from "../../connection/Connection";
 import COLOR from "../../resources/Color";
 import Skeleton from "@material-ui/lab/Skeleton";
@@ -210,7 +210,9 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
                         </React.Fragment>
                     ) : (
 
-                        <PieChart width={400} height={400}>
+                        <ResponsiveContainer width={400} height={400}>
+
+                          <PieChart width={400} height={400} >
                             <Pie
                                 data={diversityDaily}
                                 cx={200}
@@ -238,6 +240,9 @@ export const NewsDiversitySection = React.forwardRef((props, ref) => {
                                 bottom: "-15px"
                             }}/>
                         </PieChart>
+
+                        </ResponsiveContainer>
+
                     )}
                 </TabPanelContainer>
                 <TabPanelContainer value={page} index={1}>

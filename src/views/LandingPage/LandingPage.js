@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: "0px 0px 20px 10px rgba(0,0,0,0.2)",
         padding: 45,
         backgroundImage: "url(" + WORLD_IMAGE + ")," +
-        // backgroundImage: `url(${Papyrus})` +
+            // backgroundImage: `url(${Papyrus})` +
             `linear-gradient(90deg, rgba(29,115,255,1) 0%, rgba(22,35,126,1) 100%)`,
         backgroundRepeat: "no-repeat,repeat",
         backgroundSize: "40%,auto",
@@ -88,15 +88,22 @@ export default function LandingPage(props) {
     return (
         <div>
             <Container maxWidth="lg">
-                <header className="lp-header">
-                    <Card className={classes.search}>
+                <Grid container
+                      className="lp-header"
+                      justify="space-evenly"
+                      alignItems="center"
+                      xs={12}
+                >
+                    <Grid item xs={12} xl={6}>
+                        <Card className={classes.search}>
+                            <SourceAutocomplete
+                                onChangeValue={onChangeValueHandler}
+                            />
+                        </Card>
 
-                    <SourceAutocomplete
-                        onChangeValue={onChangeValueHandler}
-                    />
-                    </Card>
+                    </Grid>
+                </Grid>
 
-                </header>
 
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
@@ -123,7 +130,8 @@ export default function LandingPage(props) {
 
             <div className={classes.footerContainer}>
                 <div className={classes.footer}>
-                    crafted with ❤️ by <a className={classes.link} href="https://github.com/hasanMhdAmin">Hasan Mhd Amin</a>
+                    crafted with ❤️ by <a className={classes.link} href="https://github.com/hasanMhdAmin">Hasan Mhd
+                    Amin</a>
                 </div>
 
             </div>

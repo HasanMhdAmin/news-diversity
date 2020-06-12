@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactWordcloud from 'react-wordcloud';
 import COLOR from "../../resources/Color";
+import Grid from "@material-ui/core/Grid";
 
 export default function Wordcloud(props) {
 
     return (
-        <div style={{height: 400, maxWidth: 500}}>
+        <div style={{height: 400}}>
             <ReactWordcloud words={props.words}
                             callbacks={props.callback}
                             options={{
