@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ff0aabe9a3805d544c08f536394792a2",
+    "revision": "9f3764aa6e86c8f6694a1b70e4cb5089",
     "url": "/news-diversity/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/news-diversity/static/css/2.6b8b0033.chunk.css"
   },
   {
-    "revision": "4356086a91182a1ac994",
+    "revision": "9f404137dc78fdad67b9",
     "url": "/news-diversity/static/css/main.1efb7019.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/news-diversity/static/js/2.1a1ad72f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4356086a91182a1ac994",
-    "url": "/news-diversity/static/js/main.e696a7af.chunk.js"
+    "revision": "9f404137dc78fdad67b9",
+    "url": "/news-diversity/static/js/main.d4197e77.chunk.js"
   },
   {
     "revision": "09aece5b6cb903f56db0",
