@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {HashRouter, BrowserRouter, Route, Switch} from "react-router-dom";
 import LandingPage from "./views/LandingPage/LandingPage";
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 import {NewsDiversitySection} from "./views/LandingPage/NewsDiversitySection";
@@ -19,7 +19,7 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
-        <BrowserRouter>
+        <HashRouter>
             <Switch>
                 <Route path="/test" component={App}/>
                 <Route path="/diversity" component={NewsDiversitySection}/>
@@ -27,7 +27,7 @@ ReactDOM.render(
                 <Route path="/" component={LandingPage}/>
 
             </Switch>
-        </BrowserRouter>
+        </HashRouter>
     </MuiThemeProvider>,
     document.getElementById('root')
 );
